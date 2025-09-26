@@ -2,7 +2,7 @@ use axum::{Json, extract::Path, http::StatusCode, response::IntoResponse, extrac
 use crate::service::UserService;
 use crate::models::UserPayload;
 
-pub async fn List_users(State(service): State<UserService>) -> Json<Vec<crate::models::User>> {
+pub async fn list_users(State(service): State<UserService>) -> Json<Vec<crate::models::User>> {
     Json(service.list_users().await)
 }
 
@@ -16,7 +16,7 @@ pub async fn create_user(
 pub async fn get_user(
     Path(id): Path<String>,
     State(service): State<UserService>,
-) -> imp Into Response{
+) -> impl IntoResponse{
     if let Some(user) = service.get_user(&id).await{
         Json(user).into_response()
     }
@@ -46,6 +46,6 @@ pub async fn delete_user(
         StatusCode::NO_CONTENT.into_response()
     }
     else{
-        (StatusCOde:NOT_FOUND, "User not found").into_response()
+        (StatusCode::NOT_FOUND, "User not found").into_response()
     }
 }

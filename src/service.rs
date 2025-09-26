@@ -1,4 +1,7 @@
-#[derrive(Clone)]
+use crate::models::{User, UserPayload};
+use crate::repository::UserRepository;
+
+#[derive(Clone)]
 pub struct UserService{
     repo: UserRepository,
 }
@@ -20,7 +23,7 @@ impl UserService{
         self.repo.get(id).await
     }
 
-    pub async update_user(&self, id: &str, payload: UserPayload) -> Option<User> {
+    pub async fn update_user(&self, id: &str, payload: UserPayload) -> Option<User> {
         self.repo.update(id, payload).await
     }
 

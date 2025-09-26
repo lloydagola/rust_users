@@ -12,7 +12,7 @@ impl UserRepository{
         Self{pool}
     }
 
-    pub async fn List(&self) -> Vec<User>{
+    pub async fn list(&self) -> Vec<User>{
         sqlx::query_as::<_, User>("SELECT * FROM users")
         .fetch_all(&self.pool)
         .await
